@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.springframework.social.openidconnect</groupId>
 	<artifactId>spring-social-paypal</artifactId>
-	<version>1.1.9-SNAPSHOT</version>
+	<version>1.1.8-SNAPSHOT</version>
 	<name>Spring Social PayPal for OpenId Connect</name>
 	<description>Extends Spring Social core API to add support for openid connect specification</description>
 	<packaging>jar</packaging>
@@ -149,10 +149,42 @@
 					<tagNameFormat>v@{project.version}</tagNameFormat>
 					<autoVersionSubmodules>true</autoVersionSubmodules>
 					<releaseProfiles>releases</releaseProfiles>
+					<checkModificationExcludes>
+						<checkModificationExclude>release-pom.xml</checkModificationExclude>
+					</checkModificationExcludes>
 				</configuration>
 			</plugin>
 		</plugins>
 	</build>
+
+	<profiles>
+		<profile>
+			<id>releases</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.sonatype.plugins</groupId>
+						<artifactId>nexus-staging-maven-plugin</artifactId>
+						<version>1.5.1</version>
+						<executions>
+							<execution>
+								<id>default-deploy</id>
+								<phase>deploy</phase>
+								<goals>
+									<goal>deploy</goal>
+								</goals>
+							</execution>
+						</executions>
+						<configuration>
+							<serverId>releases</serverId>
+							<nexusUrl>http://maven01.billmelater.com:8080/nexus/content/repositories/releases</nexusUrl>
+							<skipStaging>true</skipStaging>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
 
 	<distributionManagement>
 		<repository>
@@ -161,6 +193,12 @@
 			<url>http://maven01.billmelater.com:8080/nexus/content/repositories/releases</url>
 			<uniqueVersion>false</uniqueVersion>
 		</repository>
+		<snapshotRepository>
+			<id>snapshots</id>
+			<name>Internal Snapshots</name>
+			<url>http://maven01.billmelater.com:8080/nexus/content/repositories/snapshots</url>
+			<uniqueVersion>false</uniqueVersion>
+		</snapshotRepository>
 	</distributionManagement>
 
 	<scm>
