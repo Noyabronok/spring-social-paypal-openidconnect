@@ -129,6 +129,38 @@
 					</execution>
 				</executions>
 			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-release-plugin</artifactId>
+				<version>2.4.2</version>
+				<dependencies>
+					<dependency>
+						<groupId>org.apache.maven.scm</groupId>
+						<artifactId>maven-scm-provider-gitexe</artifactId>
+						<version>1.8.1</version>
+					</dependency>
+				</dependencies>
+				<configuration>
+					<tagNameFormat>v@{project.version}</tagNameFormat>
+					<autoVersionSubmodules>true</autoVersionSubmodules>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
+
+	<distributionManagement>
+		<repository>
+			<id>releases</id>
+			<name>Internal Releases</name>
+			<url>http://maven01.billmelater.com:8080/nexus/content/repositories/releases</url>
+			<uniqueVersion>false</uniqueVersion>
+		</repository>
+	</distributionManagement>
+
+	<scm>
+		<connection>scm:git:file://localhost/Users/afeldman/Projects/spring-social-paypal-openidconnect</connection>
+		<developerConnection>scm:git:file://localhost/Users/afeldman/Projects/spring-social-paypal-openidconnect</developerConnection>
+		<url>scm:git:file://localhost/Users/afeldman/Projects/spring-social-paypal-openidconnect</url>
+		<tag>HEAD</tag>
+	</scm>
 </project>
